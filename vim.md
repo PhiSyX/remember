@@ -285,6 +285,28 @@ Ensuite <kbd>j↓</kbd> et <kbd>.</kbd> pour ne pas se répéter.
 + let my_bool = true;░
 ```
 
+Nous pouvions également le mode "VISUAL BLOCK" pour nous aider à insérer notre
+point-virgule.
+
+```diff
++ let my░_num = 7
++ let my_str = "PhiSyX"
++ let my_bool = true
+
+@@  keystroke: <C-v>      @@
+@@  keystroke: jj$        @@
+! let my_num = 7░
+! let my_str = "PhiSyX"░
+! let my_bool = true░
+@@  keystroke: A; ␛      @@
+- let my_num = 7░
+- let my_str = "PhiSyX"░
+- let my_bool = true░
++ let my_num = 7;░
++ let my_str = "PhiSyX";
++ let my_bool = true;
+```
+
 ## Remplacer du texte
 
 Pour remplacer un caractère par un caractère donné : <kbd>r`<char>`</kbd>
@@ -292,13 +314,13 @@ Pour remplacer un caractère par un caractère donné : <kbd>r`<char>`</kbd>
 ```
 Nous aimerions transformer cette exemple:
 
-// Mon super commentaire // 
-// Mon super commentaire // 
+// Mon super commentaire //
+// Mon super commentaire //
 // Mon super commentaire //
 
 en
 
-// --------------------- // 
+// --------------------- //
 // Mon super commentaire //
 // --------------------- //
 ```
@@ -307,14 +329,14 @@ en
 
 ```diff
 @@  keystroke: vt/  @@
-- // ░Mon super commentaire // 
-+ // ░Mon super commentaire ░// 
+- // ░Mon super commentaire //
++ // ░Mon super commentaire ░//
 @@  keystroke: h ←  @@
-- // ░Mon super commentaire ░// 
-+ // ░Mon super commentaire░ // 
+- // ░Mon super commentaire ░//
++ // ░Mon super commentaire░ //
 @@  keystroke: r-   @@ 
-- // ░Mon super commentaire░ // 
-+ // ░--------------------- // 
+- // ░Mon super commentaire░ //
++ // ░--------------------- //
 @@  keystroke: jj.   @@ 
 - // Mon super commentaire //
 + // --------------------- //
