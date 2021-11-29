@@ -285,6 +285,41 @@ Ensuite <kbd>j↓</kbd> et <kbd>.</kbd> pour ne pas se répéter.
 + let my_bool = true;░
 ```
 
+## Remplacer du texte
+
+Pour remplacer un caractère par un caractère donné : <kbd>r`<char>`</kbd>
+
+```
+Nous aimerions transformer cette exemple:
+
+// Mon super commentaire // 
+// Mon super commentaire // 
+// Mon super commentaire //
+
+en
+
+// --------------------- // 
+// Mon super commentaire //
+// --------------------- //
+```
+
+<kbd>vt/hr-jj.</kbd>
+
+```diff
+@@  keystroke: vt/  @@
+- // ░Mon super commentaire // 
++ // ░Mon super commentaire ░// 
+@@  keystroke: h ←  @@
+- // ░Mon super commentaire ░// 
++ // ░Mon super commentaire░ // 
+@@  keystroke: r-   @@ 
+- // ░Mon super commentaire░ // 
++ // ░--------------------- // 
+@@  keystroke: jj.   @@ 
+- // Mon super commentaire //
++ // --------------------- //
+```
+
 ## Incrémenter/Décrémenter
 
 Pour incrémenter un nombre qui se trouverait au plus proche du curseur vers la
