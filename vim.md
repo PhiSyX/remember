@@ -287,4 +287,31 @@ droite sur une ligne: <kbd> `[number]<C-`a`>`</kbd>. Pour décrémenter :
 + let my_str = "J'ai 27 ans, ░5 chiens.";
 ```
 
-...
+## Ajouter du texte
+
+Imaginons que nous avons copié du code et que celui-ci n'a pas les
+points-virgules à la fin de chaque ligne. Et nous trouvons ça très embêtant, car
+nous aimons très fortement les points-virgules en fin de ligne. Nous allons
+devoir les ajouter. Mais comment faire avec vim ?
+
+Nous allons utiliser <kbd>A</kbd> qui nous permet d'aller en fin de ligne et de
+passer en mode "INSERT" automatiquement pour y rajouter notre point-virgule.
+Ensuite <kbd>j↓</kbd> et <kbd>.</kbd> pour ne pas se répéter.
+
+```diff
++ let my░_num = 7
++ let my_str = "PhiSyX"
++ let my_bool = true
+
+@@  keystroke: A;␛  @@
+- let my░_num = 7
++ let my_num = 7;░
+
+@@  keystroke: j↓    @@
+@@  keystroke: .     @@
+- let my_str = "PhiSyX"
++ let my_str = "PhiSyX";░
+@@  keystroke: j↓ .  @@
+- let my_bool = true
++ let my_bool = true;░
+```
