@@ -83,18 +83,17 @@ d'appuyer sur <kbd>N</kbd>.
 # Commodi quae architecto assumenda, fugit dicta ducimus.
 # Amet illum sint laborum earum id modi saepe cumque, facere dolorem quibusdam veritatis omnis ullam?
 
+
 @@  keystroke: /it    @@
 @@  keystroke: ENTER ↵  @@
 ! Lorem ipsum dolor, s▒it▒ amet consectetur adipisicing el.
 # Commodi quae architecto assumenda, fugit dicta ducimus.
 # Amet illum sint laborum earum id modi saepe cumque, facere dolorem quibusdam veritatis omnis ullam?
-
 @@  keystroke: /        @@
 @@  keystroke: ENTER ↵  @@
 # Lorem ipsum dolor, sit amet consectetur adipisicing el.
 ! Commodi quae arch▒it▒ecto assumenda, fugit dicta ducimus.
 # Amet illum sint laborum earum id modi saepe cumque, facere dolorem quibusdam veritatis omnis ullam?
-
 @@  keystroke: N        @@
 ! Lorem ipsum dolor, s▒it▒ amet consectetur adipisicing el.
 # Commodi quae architecto assumenda, fugit dicta ducimus.
@@ -104,8 +103,10 @@ d'appuyer sur <kbd>N</kbd>.
 ---
 
 La touche <kbd>.</kbd> permet de répéter la dernière action effectuée.\
-La touche <kbd>;</kbd> permet de répéter la dernière action, qui n'altère pas le
-texte (couper/coller), effectuée.
+La touche <kbd>;</kbd> permet de répéter la dernière action effectuée, qui
+n'altère pas le texte (couper/coller).\
+La touche <kbd>,</kbd> permet de répéter la dernière action effectuée, qui
+n'altère pas le texte (couper/coller), dans le sens inverse.
 
 Certaines touches s'attendent à recevoir d'autres _séquences de_ touches, qui
 les suffixes, pour effectuer leur action. Suivant les touches qui les suivent,
@@ -141,7 +142,7 @@ internets, mais il s'agit d'une constatation. Ne pas prendre pas cette phrase au
 pied de la lettre. Nous verrons d'ailleurs _peut-être_ plus tard des
 contres-exemples.
 
-## Suppression
+## Supprimer du texte
 
 (En vérité, vim ne supprime pas tout à fait le texte qu'on lui demande de
 retirer. Il le garde plutôt en tampon/mémoire. Comme le bon vieux classique
@@ -170,12 +171,12 @@ nous donnons la combinaison <kbd>f`<char>`</kbd> à <kbd>d</kbd> ?
 + Salut tout le monde
 + Comment va░ t'on ?
 
+
 @@  keystroke: dfn  @@
 + Hey!
 + Salut tout le monde
 - Comment va░ t'on ?
 + Comment va░ ?
-
 @@  keystroke: dFm  @@
 + Hey!
 + Salut tout le monde
@@ -210,6 +211,7 @@ curseur et le caractère `!` dans l'exemple qui suit:
 + "enchaîner" la suppression et la recherche me diriez-vous? Et bien oui! C'est une
 + très belle idée, Jamy! Faisons ça.
 
+
 @@  keystroke: d        @@
 @@  keystroke: /!       @@
 @@  keystroke: ENTER ↵  @@
@@ -233,6 +235,7 @@ ou <kbd>cc</kbd>.
 + Salut to░ut le monde
 + Comment va-t-on ?
 
+
 @@  keystroke: dd  @@
 + Hey!
 - Salut to░ut le monde
@@ -247,6 +250,7 @@ Pour supprimer du texte qui se trouve entre des caractères spéciaux :
 
 ```diff
 + let my_str = "Hello world !";
+
 
 @@  keystroke: ci"    @@
 - let my_str = "He░llo world !";
@@ -272,10 +276,10 @@ Ensuite <kbd>j↓</kbd> et <kbd>.</kbd> pour ne pas se répéter.
 + let my_str = "PhiSyX"
 + let my_bool = true
 
+
 @@  keystroke: A;␛  @@
 - let my░_num = 7
 + let my_num = 7;░
-
 @@  keystroke: j↓    @@
 @@  keystroke: .     @@
 - let my_str = "PhiSyX"
@@ -285,13 +289,14 @@ Ensuite <kbd>j↓</kbd> et <kbd>.</kbd> pour ne pas se répéter.
 + let my_bool = true;░
 ```
 
-Nous pouvions également le mode "VISUAL BLOCK" pour nous aider à insérer notre
-point-virgule.
+Nous pouvons également utiliser le mode "VISUAL BLOCK" pour nous aider à insérer
+notre point-virgule.
 
 ```diff
 + let my░_num = 7
 + let my_str = "PhiSyX"
 + let my_bool = true
+
 
 @@  keystroke: <C-v>      @@
 @@  keystroke: jj$        @@
@@ -307,44 +312,167 @@ point-virgule.
 + let my_bool = true;
 ```
 
-## Remplacer du texte
+## Sélectionner du texte
 
-Pour remplacer un caractère par un caractère donné : <kbd>r`<char>`</kbd>
+- Séquence avec <kbd>v`<char>`</kbd> : le mode passe en "VISUAL" ;
 
-```
-Nous aimerions transformer cette exemple:
+Imaginons que nous voulons sélectionner du code, déjà écrit dans notre script,
+mais nous ne voulons récupérer qu'une partie de celui-ci. Il n'est pas rare de
+vouloir sélectionner tout le contenu d'un tableau, ou tout le contenu d'un block
+de code pour le supprimer, le déplacer, etc.
 
-// Mon super commentaire //
-// Mon super commentaire //
-// Mon super commentaire //
+Il y a différente façon de faire. Je ne vais pas tous les citer, il faudra
+regarder en détail les différences, et quelles sont les meilleures.
 
-en
+Ici, nous allons utiliser : <kbd>vi`<char>`</kbd> / <kbd>va`<char>`</kbd>,
+<kbd>v%</kbd> ou encore <kbd>vip</kbd> / <kbd>vap</kbd>.
 
-// --------------------- //
-// Mon super commentaire //
-// --------------------- //
-```
-
-<kbd>vt/hr-jj.</kbd>
+Pour utiliser <kbd>v%</kbd>, le curseur doit se trouver à la fin du caractère
+auquel nous voulons sélectionner tout le contenu.
 
 ```diff
-@@  keystroke: vt/  @@
++
++ if (true) {
++     let my_obj = {░
++         foo: "bar",
++         bar: "foo",
++         foobar: "barfoo",
++     };
++ } else {
++     console.log("foobar")
++ }
++
+
+
+@@  keystroke: v%  @@
++
++ if (true) {
+!     let my_obj = {░
+!         foo: "bar",
+!         bar: "foo",
+!         foobar: "barfoo",
+!     };░
++ } else {
++     console.log("foobar")
++ }
++
+```
+
+Ce qui peut être embêtant, parfois. Mais avec <kbd>vi`<char>`</kbd> /
+<kbd>va`<char>`</kbd>, le curseur peut se placer en deça du caractère auquel
+nous voulons sélectionner tout le contenu.
+
+```diff
++
++ if (true) {
++     let my_obj = {
++         foo: "bar",
++         bar: "f░oo",
++         foobar: "barfoo",
++     };
++ } else {
++     console.log("foobar")
++ }
++
+
+
+@@  keystroke: va{  @@
++
++ if (true) {
+!     let my_obj = {░
+!         foo: "bar",
+!         bar: "foo",
+!         foobar: "barfoo",
+!     }░;
++ } else {
++     console.log("foobar")
++ }
++
+```
+
+Et enfin, nous avons <kbd>vip</kbd> / <kbd>vap</kbd> qui a une sélection plus
+large.
+
+```diff
++
++ if (true) {
++     let my_obj = {
++         foo: "bar",
++         bar: "foo",
++         foobar: "barfoo",
++     };░
++ } else {
++     console.log("foobar")
++ }
++
+
+
+@@  keystroke: vip  @@
++ 
+! ░if (true) {
+!     let my_obj = {
+!         foo: "bar",
+!         bar: "foo",
+!         foobar: "barfoo",
+!     };
+! } else {
+!     console.log("foobar")
+! }
+! ░
+```
+
+## Remplacer du texte
+
+- Séquence avec <kbd>r`<char>`</kbd> : qui permet de remplacer un caractère
+  donné où se trouve le curseur.
+
+Imaginons que nous aimerions transformer cet exemple:
+
+```
+// Mon super commentaire //
+// Mon super commentaire //
+// Mon super commentaire //
+```
+
+en celui-ci
+
+```
+// --------------------- //
+// Mon super commentaire //
+// --------------------- //
+```
+
+Comment procéderions-nous avec toutes les techniques que nous avons déjà
+rencontrée ?
+
+Tout d'abord, il faille sélectionner le texte à remplacer, et ensuite utiliser
+la séquence <kbd>r`<char>`</kbd> pour remplacer tous les caractères.
+
+Ce qui nous donne: <kbd>vt/hr-</kbd> et <kbd>j↓j↓.</kbd>
+
+```diff
++ // ░Mon super commentaire //
++ // Mon super commentaire //
++ // Mon super commentaire //
+
+
+@@  keystroke: vt/    @@
 - // ░Mon super commentaire //
 + // ░Mon super commentaire ░//
-@@  keystroke: h ←  @@
+@@  keystroke: h ←    @@
 - // ░Mon super commentaire ░//
 + // ░Mon super commentaire░ //
-@@  keystroke: r-   @@ 
+@@  keystroke: r-     @@ 
 - // ░Mon super commentaire░ //
 + // ░--------------------- //
-@@  keystroke: jj.   @@ 
+@@  keystroke: j↓j↓.  @@ 
 - // Mon super commentaire //
 + // --------------------- //
 ```
 
 ## Incrémenter/Décrémenter
 
-Pour incrémenter un nombre qui se trouverait au plus proche du curseur vers la
+Pour incrémenter un nombre qui se trouverait au plus proche du curseur, vers la
 droite sur une ligne: <kbd> `[number]<C-`a`>`</kbd>. Pour décrémenter :
 <kbd> `[number]<C-`x`>`</kbd>
 
@@ -373,20 +501,27 @@ droite sur une ligne: <kbd> `[number]<C-`a`>`</kbd>. Pour décrémenter :
 + let my_str = "J'ai 27 ans, ░5 chiens.";
 ```
 
+Par exemple, il m'est déjà arrivé d'utiliser l'incrémentation/la décrémentation
+pour ce genre de cas:
+
 ```diff
-+ .my-css-selector { position: absolute: top: 0x; }
++ .my-░css-selector { position: absolute: top: 0x; }
 
 @@  keystroke: 120<C-x>  @@
-- .my-css-selector { position: absolute; top: 0px; }
-+ .my-css-selector { position: absolute; top: -120px; }
+- .my-░css-selector { position: absolute; top: 0px; }
++ .my-css-selector { position: absolute; top: -12░0px; }
 ```
 
 ```diff
-+ version = "0.1.0"
++ ░version = "0.1.0"
 
 @@  keystroke: $      @@
+- ░version = "0.1.0"
++ version = "0.1.0"░
 @@  keystroke: h ←    @@
+- version = "0.1.0"░
++ version = "0.1.0░"
 @@  keystroke: <C-a>  @@
-- version = "0.1.0"
-+ version = "0.1.1"
+- version = "0.1.0░"
++ version = "0.1.1░"
 ```
