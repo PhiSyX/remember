@@ -107,3 +107,28 @@ se terminant avec un son voyell-ique en:
 - `o` s'allonge avec un `う` ou `お`.
 
 Pour les `KATAKANA`, 'allongement se fait avec le signe `ー`.
+
+## Prononciation (des mots que l'on voit en rōmaji)
+
+- Dans un mot japonais, le `s` se prononce uniquement comme des sons en `S` et
+  non comme des sons en `z`.\
+  Par exemple comme pour les mots/noms suivants:
+  - SERPENT
+  - BRASSER
+  - MOUSSE
+  - MOUSTACHE
+  - SABRINA
+
+  Mais **PAS** comme pour les mots/noms suivants:
+  - LASAGNE
+  - CAMISOLE
+  - INFUSION
+  - ISABELLE
+
+- Pour chaque mot se terminant par `masu` ou `desu`, le `u` de fin ne se
+  prononcera pas forcément, ou du moins ça dépendra des régions. Même si la
+  lettre `u` n'est pas prononcée, la lettre `s` elle, l'est. Comme le sssss d'un
+  serpent.\
+  Par exemple:
+  - itadakimasu -> itadakimassss
+  - neko desu ka? -> neko dessss ka ?
