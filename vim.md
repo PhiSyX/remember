@@ -84,7 +84,7 @@ d'appuyer sur <kbd>N</kbd>.
 # Amet illum sint laborum earum id modi saepe cumque, facere dolorem quibusdam veritatis omnis ullam?
 
 
-@@  keystroke: /it    @@
+@@  keystroke: /it      @@
 @@  keystroke: ENTER ↵  @@
 ! Lorem ipsum dolor, s▒it▒ amet consectetur adipisicing el.
 # Commodi quae architecto assumenda, fugit dicta ducimus.
@@ -347,11 +347,11 @@ auquel nous voulons sélectionner tout le contenu.
 @@  keystroke: v%  @@
 +
 + if (true) {
-!     let my_obj = {░
+!     let my_obj = ░{
 !         foo: "bar",
 !         bar: "foo",
 !         foobar: "barfoo",
-!     };░
+!     }░;
 + } else {
 +     console.log("foobar")
 + }
@@ -379,7 +379,7 @@ nous voulons sélectionner tout le contenu.
 @@  keystroke: va{  @@
 +
 + if (true) {
-!     let my_obj = {░
+!     let my_obj = ░{
 !         foo: "bar",
 !         bar: "foo",
 !         foobar: "barfoo",
@@ -469,6 +469,10 @@ Ce qui nous donne: <kbd>vt/hr-</kbd> et <kbd>j↓j↓.</kbd>
 - // Mon super commentaire //
 + // --------------------- //
 ```
+
+Nous aurions également pu utiliser d'autres séquences de touches (par exemple:
+<kbd>v3er-</kbd>, ...). Il faut bien comprendre qu'il n'y a pas qu'une seule
+façon de faire, nous ne sommes pas limité. A chacun sa créativité.
 
 ## Incrémenter/Décrémenter
 
