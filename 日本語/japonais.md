@@ -106,9 +106,21 @@ se terminant avec un son voyell-ique en:
 - `e` s'allonge avec un `い` ou `え`.
 - `o` s'allonge avec un `う` ou `お`.
 
-Pour les `KATAKANA`, 'allongement se fait avec le signe `ー`.
+Pour les `KATAKANA`, l'allongement se fait avec le signe `ー`.
 
-## Prononciation (des mots que l'on voit en rōmaji)
+---
+
+Les mots japonais n’ont ni de genres ni de pluriels. Ils estiment que le
+contexte peut suffire pour donner un genre ou un pluriel aux mots.
+
+Une phrase comme « neko desu. » peut très bien signifier « c’est un(e) chat(te)
+» que « ce sont des chat(te)s », suivant le contexte.
+
+Tous les mots qu'il y aura dans ce document seront retranscrit au masculin, sauf
+pour des cas exceptionnel, et au singulier. Ne voyez aucun mépris envers la
+gente féminine de ma part.
+
+# Prononciation des mots que l'on voit en rōmaji
 
 - Dans un mot japonais, le `s` se prononce uniquement comme des sons en `S` et
   non comme des sons en `z`.\
