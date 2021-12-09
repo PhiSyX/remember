@@ -11,17 +11,6 @@ retour appropriés pour chaque cas.
 Les programmes ASM renvoient le code de retour en le passant à l'appel système\
 (syscall) `exit` comme premier argument, en `rdi`.
 
-## L'instruction `xor rdi, rdi`
-
-Est l'équivalente de
-
-```asm
-mov rdi, 0
-```
-
-Elles mettent à zéro le registre `rdi`. L'utilisation de `xor` est plus petite\
-que `mov` en mémoire (1 byte contre 9 bytes pour `mov` avec opérande).
-
 ## Constantes numériques avec [NASM](https://www.nasm.us/doc/nasmdoc3.html#section-3.4.1)
 
 ```asm
@@ -43,3 +32,38 @@ mov     ax,1100_1000y   ; same binary constant once more
 mov     ax,0b1100_1000  ; same binary constant yet again 
 mov     ax,0y1100_1000  ; same binary constant yet again
 ```
+
+## L'instruction `xor rdi, rdi`
+
+Est l'équivalente de
+
+```asm
+mov rdi, 0
+```
+
+Elles mettent à zéro le registre `rdi`. L'utilisation de `xor` est plus petite\
+que `mov` en mémoire (1 byte contre 9 bytes pour `mov` avec opérande).
+
+## Instructions `je` et `jz`
+
+Il s'agit de la même instruction, écrite différemment.
+
+## Little Endian
+
+```asm
+section .data
+test: dq -1         ; on a commencé avec test = 0xFFFFFFFFFFFFFFFF
+
+section .text
+
+; dans les lignes suivantes, on écrit les 8 premiers bytes séparément 
+; dans le registre
+mov byte[test], 1	; test: 01 FF FF FF FF FF FF FF
+mov word[test], 1	; test: 01 00 FF FF FF FF FF FF
+mov dword[test], 1	; test: 01 00 00 00 FF FF FF FF
+mov qword[test], 1	; test: 01 00 00 00 00 00 00 00
+```
+
+La convention Little Endian explique pourquoi on voit le format 8 bytes se\
+remplir de zéros de gauche à droite. Les bytes en mémoire sont stockés dans\
+l'ordre inverse, le byte le moins significatif étant le premier.
