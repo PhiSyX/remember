@@ -48,6 +48,28 @@ que `mov` en mémoire (1 byte contre 9 bytes pour `mov` avec opérande).
 
 Il s'agit de la même instruction, écrite différemment.
 
+# Instructions `ja`/`jb` et `jl`/`jg`
+
+`jg` et `jl` sont utilisés pour effectuer des `jumps` après une comparaison\
+signée.
+
+```asm
+mov rax, 42
+mov rcx, -1
+cmp rax, rcx
+jl rcx          ; ce jump ne ser pas effectué
+```
+
+`ja` et `jb` sont utilisés pour effectuer des sauts après une comparaison non\
+signée
+
+```asm
+mov rax, 42
+mov rcx, -1
+cmp rax, rcx
+jb rcx          ; ce jump sera effectué
+```
+
 ## Little Endian
 
 ```asm
