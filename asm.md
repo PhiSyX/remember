@@ -70,7 +70,7 @@ cmp rax, rcx
 jb rcx          ; ce jump sera effectué
 ```
 
-## Tester si `rax` est 0 sans `cmp`
+## Tester si `rax` est égal à 0 sans utiliser `cmp`
 
 ```asm
 test rax, rax
@@ -80,7 +80,39 @@ _my_label:
     ; on jump ici si rax égal à 0
 ```
 
-## Little Endian
+## Multiplier `rax` par 9 en utilisant qu'une seule instruction
+
+```asm
+lea rax, [rax + rax * 8]
+```
+
+## 
+
+## Little Endian / Big Endian
+
+Le premier byte d'un nombre multi-byte contient les chiffres les moins\
+significatifs avec Little Endian. Avec Big Endian, il contient les chiffres les\
+plus significatifs.
+
+Donc, imaginons pour : `0x1122334455667788`
+
+en Little Endian:
+
+- commence à l'adresse: `0x88`
+- start + 1 -> `0x77`
+- start + 2 -> `0x66`
+- ...
+- start + 7 -> `0x11`
+
+en Big Endian:
+
+- commence à l'adresse: `0x11`
+- start + 1 -> `0x22`
+- start + 2 -> `0x33`
+- ...
+- start + 7 -> `0x88`
+
+---
 
 ```asm
 section .data
