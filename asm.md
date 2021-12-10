@@ -2,7 +2,7 @@
 
 ## Code de retour (Exit Status)
 
-Le code de retour (exit status) d'un programme est nombre qu'il renvoie pour\
+Le code de retour (exit status) d'un programme est le nombre qu'il renvoie pour\
 signifier l'état d'exécution du programme. S'il est exécuté correctement, la\
 convention est de retourner 0, sinon on renvoie un code différent de 0, un code\
 d'erreur. Il est à la responsabilité du développeur de définir les codes de\
@@ -68,6 +68,16 @@ mov rax, 42
 mov rcx, -1
 cmp rax, rcx
 jb rcx          ; ce jump sera effectué
+```
+
+## Tester si `rax` est 0 sans `cmp`
+
+```asm
+test rax, rax
+jz _my_label
+
+_my_label:
+    ; on jump ici si rax égal à 0
 ```
 
 ## Little Endian
