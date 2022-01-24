@@ -13,4 +13,4 @@
   - [Kanji](日本語/漢字.md)
   - [Kansuji](日本語/漢数字.md)
 
-- [VIM](vim.md)
+- [VIM](vim/vim.md)
