@@ -154,8 +154,8 @@ set shiftwidth=4
 set expandtab
 set autoindent
 
-set background=dark
 set noerrorbells visualbell t_vb=
+set number
 set ruler
 
 set cmdheight=2
@@ -186,11 +186,11 @@ autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints {
 \ }
 
 autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
-    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
-autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | wincmd p | endif
+
 
 " command! -bang -nargs=? -complete=dir Files
 "     \ call fzf#vim#files(<q-args>, {'options': [ '--layout=reverse',
@@ -219,12 +219,14 @@ nnoremap / /\v
 nnoremap <C-e> 		:NERDTreeToggle<CR>
 nnoremap <C-z> 		<nop>
 
+nnoremap ml :lua require('material.functions').change_style('lighter')<CR>
+nnoremap md :lua require('material.functions').change_style('deep ocean')<CR>
+
+" Déplacement ligne de code  
 nnoremap <A-Down> 	:m .+1<CR>==
 nnoremap <A-Up> 	:m .-2<CR>==
-
 inoremap <A-Down>	<Esc>:m .+1<CR>==gi
 inoremap <A-Up>		<Esc>:m .-2<CR>==gi
-
 vnoremap <A-Down> 	:m '>+1<CR>gv=gv
 vnoremap <A-Up> 	:m '<-2<CR>gv=gv
 
