@@ -1,194 +1,230 @@
-" Linux:   ln -s ./init.vim <neovim-dir>/init.vim
-" Windows: New-Item -ItemType SymbolicLink -Path "<nvim-dir>\init.vim" -Target "<my-dir>\init.vim"
-"
-" Plugin à installer (:PlugInstall)
-"
+" Plugins à installer (:PlugInstall)
+" ------- - --------- ---------------
 call plug#begin(stdpath('data') . '/plugged')
-
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-
-" Collection de configurations communes pour le client LSP de NVIM
-Plug 'neovim/nvim-lspconfig'
-
-" @hrsh7th
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/vim-vsnip'
-
-" Pour activer davantage de fonctionnalités de Rust Analyzer
-Plug 'simrat39/rust-tools.nvim'
-
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-
-" Tree explorer: https://github.com/scrooloose/nerdtree
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'majutsushi/tagbar'
-
-" Status Line : https://github.com/vim-airline/vim-airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" Editor settings: https://github.com/editorconfig/editorconfig-vim
+"" Améliorations de VIM
+Plug 'ciaranm/securemodelines'
 Plug 'editorconfig/editorconfig-vim'
 
-" https://github.com/xolox/vim-misc
-Plug 'xolox/vim-misc'
+" Les thèmes
+" --- ------
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'marko-cerovac/material.nvim'
 
-" Markdown: https://github.com/plasticboy/vim-markdown
-Plug 'plasticboy/vim-markdown'
+" Améliorations de l'interface graphique
+" ------------- -- ----------- ---------
+Plug 'preservim/nerdtree' |
+	\ Plug 'Xuyuanp/nerdtree-git-plugin' |
+	\ Plug 'ryanoasis/vim-devicons'
+Plug 'itchyny/lightline.vim'
+Plug 'machakann/vim-highlightedyank'
+Plug 'andymass/vim-matchup'
+
+" Recherche 'Fuzzy'
+" --------- -------
+Plug 'airblade/vim-rooter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Support linguistique sémantique 
+" ------- ------------ ---------- 
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'ray-x/lsp_signature.nvim'
+Plug 'hrsh7th/cmp-vsnip' " Seulement parce que nvim-cmp l'exige
+Plug 'hrsh7th/vim-vsnip'
+Plug 'tpope/vim-surround'
+
+" Support linguistique syntaxique
+" ------- ------------ ----------
+Plug 'cespare/vim-toml'
+Plug 'stephpy/vim-yaml'
+Plug 'rust-lang/rust.vim'
+Plug 'rhysd/vim-clang-format'
 Plug 'godlygeek/tabular'
-
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 
 
-" Configure le plugin LSP `rust-tools.nvim`
-lua <<EOF
-local nvim_lsp = require'lspconfig'
+" Variables de configuration + plugins
+"--------------------------- - -------
 
-local opts = {
-	tools = {
-		autoSetHints = true,
-		hover_with_actions = true,
-		inlay_hints = {
-			show_parameter_hints = false,
-			parameter_hints_prefix = "",
-			other_hints_prefix = "",
-		},
-	},
-
-	-- Toutes les options à envoyer à nvim-lspconfig
-	-- Voir https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-	server = {
-		settings = {
-			-- Pour activer la préférence rust-analyzer :
-			-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-			["rust-analyzer"] = {
-				checkOnSave = {
-					command = "clippy"
-				},
-			}
-		}
-	},
-}
-
-require('rust-tools').setup(opts)
-EOF
-
-" Configuration de la completion
-" Voir https://github.com/hrsh7th/nvim-cmp#basic-configuration
-lua <<EOF
-local cmp = require'cmp'
-
-cmp.setup({
-	-- Enable LSP snippets
-	snippet = {
-		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
-		end,
-	},
-	mapping = {
-		['<C-p>'] = cmp.mapping.select_prev_item(),
-		['<C-n>'] = cmp.mapping.select_next_item(),
-		-- Add tab support
-		['<S-Tab>'] = cmp.mapping.select_prev_item(),
-		['<Tab>'] = cmp.mapping.select_next_item(),
-		['<C-d>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		['<C-Space>'] = cmp.mapping.complete(),
-		['<C-e>'] = cmp.mapping.close(),
-		['<CR>'] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Insert,
-			select = true,
-		})
-	},
-	sources = {
-		{ name = 'nvim_lsp' },
-		{ name = 'vsnip' },
-		{ name = 'path' },
-		{ name = 'buffer' },
-	},
-})
-EOF
+" Windows
+" -------
+if has('win64') || has('win32') || has('win16')
+	let &shell = 'pwsh.exe'
+	let s:is_win = 1
+endif
 
 
+" Rust
+" ----
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
 
+" Javascript
+" ----------
+let javaScript_fold=0
 
+" Thèmes
+" ------
+let g:material_style = 'deep ocean'
 
-colorscheme tokyonight
+let g:user_emmet_expandabbr_key='<Tab>'
+
+let g:secure_modelines_allowed_items = [
+	\ "textwidth",   "tw",
+	\ "softtabstop", "sts",
+	\ "tabstop",     "ts",
+	\ "shiftwidth",  "sw",
+	\ "expandtab",   "et",   "noexpandtab", "noet",
+	\ "filetype",    "ft",
+	\ "foldmethod",  "fdm",
+	\ "readonly",    "ro",   "noreadonly", "noro",
+	\ "rightleft",   "rl",   "norightleft", "norl",
+	\ "colorcolumn"
+\ ]
+
+let g:lightline = {
+	\ "active": {
+	\   "left": [ [ "mode", "paste" ],
+	\             [ "readonly", "filename", "modified" ] ],
+	\   "right": [ [ "lineinfo" ],
+	\              [ "percent" ],
+	\              [ "fileencoding", "filetype" ] ],
+	\ },
+	\ "component_function": {
+	\      "filename": "LightlineFilename"
+	\ },
+\ }
+
+function! LightlineFilename()
+	return expand('%:t') !=# '' ? @% : '[aucun fichier]'
+endfunction
+
+" Configuration VIM
+"-------------- ---
+
+colorscheme material
 syntax on
+hi Normal ctermbg=NONE
+
+if has('nvim')
+	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+	set inccommand=nosplit
+	noremap <C-q> :confirm qall<CR>
+end
+
+if has('win64') || has('win32') || has('win16')
+	set shellcmdflag=-ExecutionPolicy\ RemoteSigned\ -NonInteractive\ -Command 
+	set shellquote=\" 
+	set shellxquote=  
+	set shellpipe=|
+	set shellredir=>
+endif
+
+if !has('gui_running')
+	set t_Co=256
+endif
+
+" True Color
+" ---- -----
+if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)  || has('termguicolors')
+	set termguicolors
+endif
+
+" Code Folding
+" ---- -------
+set foldenable
+set foldlevelstart=2
+set foldnestmax=5
+set foldmethod=indent
 
 
-
-
-
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 200)
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | wincmd p | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | exe 'NERDTree' | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd BufEnter * setlocal cursorline
-autocmd WinEnter * setlocal cursorline
-autocmd BufLeave * setlocal nocursorline
-autocmd WinLeave * setlocal nocursorline
-
-
-
-
-
-" Meilleure expérience de la complétion: help completeopt
-set completeopt=menuone,noinsert,noselect
-
-set number
-set noshowmode
-set ruler
-set shortmess+=c
-set sidescroll=6
-set signcolumn=no
-set splitright
-set splitbelow
-set wrap
-
-" Tabulation and indents
-set ts=4
+" Indentaion
+" ----------
+filetype plugin indent on
+set tabstop=4
 set shiftwidth=4
-set ai sw=4
+set expandtab
+set autoindent
+
+set background=dark
+set noerrorbells visualbell t_vb=
+set ruler
+
+set cmdheight=2
+set encoding=utf-8
+set scrolloff=2
+set timeoutlen=300
 set updatetime=300
 
-" Désactiver beep / flash
-set vb t_vb= 
+" https://blog.sher.pl/2014/03/21/how-to-boost-your-vim-productivity/
+if executable('ag')
+	set grepprg=ag\ --nogroup\ --nocolor
+endif
+if executable('rg')
+	set grepprg=rg\ --no-heading\ --vimgrep
+	set grepformat=%f:%l:%c:%m
+endif
 
+" Configurations avec LUA
+" -------------- ---- ---
+lua << EOF
+require'lsp_cmp'
+EOF
 
+" Commande auto
+" -------- ----
+autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints {
+	\ only_current_line = true 
+\ }
 
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
+" command! -bang -nargs=? -complete=dir Files
+"     \ call fzf#vim#files(<q-args>, {'options': [ '--layout=reverse',
+" 		\ '--info=inline', '--preview',
+" 		\ stdpath('data') . '/plugged'. '/fzf.vim/bin/preview.ps1 {}']
+" 	\ }, <bang>0)
 
-" Raccourcis de navigation 
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> g[    <cmd>lua vim.diagnostic.goto_prev()<CR>
-nnoremap <silent> g]    <cmd>lua vim.diagnostic.goto_next()<CR>
+" Mapping des touches
+" ------- --- -------
+map <C-p> :FZF<CR>
 
-nnoremap <silent>       <C-e> :NERDTreeToggle<CR>
-nnoremap <silent>       <C-t> :TagbarToggle<CR>
+" Sortir du mode terminal, sans quitter le terminal
+" Notamment pour pouvoir naviguer, copier...
+tnoremap <Esc> <C-\><C-n>d
 
+nnoremap <space>    za
+nnoremap <silent>   n nzz
+nnoremap <silent>   N Nzz
+nnoremap <silent>   * *zz
+nnoremap <silent>   # #zz
+nnoremap <silent>   g* g*zz
 
+nnoremap ? ?\v
+nnoremap / /\v
 
+nnoremap <C-e> 		:NERDTreeToggle<CR>
+nnoremap <C-z> 		<nop>
 
+nnoremap <A-Down> 	:m .+1<CR>==
+nnoremap <A-Up> 	:m .-2<CR>==
 
-let g:airline_theme='atomic'
+inoremap <A-Down>	<Esc>:m .+1<CR>==gi
+inoremap <A-Up>		<Esc>:m .-2<CR>==gi
+
+vnoremap <A-Down> 	:m '>+1<CR>gv=gv
+vnoremap <A-Up> 	:m '<-2<CR>gv=gv
 
