@@ -155,7 +155,9 @@ set expandtab
 set autoindent
 
 set noerrorbells visualbell t_vb=
+set mouse=a
 set number
+set relativenumber
 set ruler
 
 set cmdheight=2
@@ -190,6 +192,7 @@ autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
     \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | wincmd p | endif
+autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 
 
 " command! -bang -nargs=? -complete=dir Files
@@ -229,4 +232,3 @@ inoremap <A-Down>	<Esc>:m .+1<CR>==gi
 inoremap <A-Up>		<Esc>:m .-2<CR>==gi
 vnoremap <A-Down> 	:m '>+1<CR>gv=gv
 vnoremap <A-Up> 	:m '<-2<CR>gv=gv
-
